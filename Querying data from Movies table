@@ -1,0 +1,56 @@
+select Title from Movie m JOIN 
+(select MovieID, Rating from Ratings order by Rating DESC limit 20) as r
+on m.MovieID = r.MovieID;
+select first_name,last_name
+  from stars_in_movies inner join stars
+ where (movie_id=%s and movie_id=%y) and star_id=id; 
+ select A.first_name
+from stars A,
+(
+select star_id
+from stars_in_movies
+where movie_id = "X"
+)B,
+(   
+select star_id
+from stars_in_movies
+where movie_id = "Y"
+)C
+where A.star_id = B.star_id
+AND B.star_id = C.star_id
+select Title from Movie m  
+inner join (select top 20 MovieID,sum(Rating) Rate from Ratings group by movieid having count(UserID)>39 order by sum(Rating) DESC) tbl
+on m.MovieID=tbl.MovieID
+order by tbl.Rate desc
+select first_name,last_name
+  from stars_in_movies inner join stars
+ where movie_id=%s and star_id=id;
+ select first_name --All stars who have not acted with star X
+from stars
+where star_id not in
+(
+    select star_id --All stars who have acted with star X
+    from stars_in_movies
+    where movie_id in
+    (
+        select movie_id     --All movies in which star X has acted
+        from stars_in_movies
+        where star_id = "X"
+    )
+)
+select Title from Movie m  
+    inner join (select  MovieID,sum(Rating) Rate from Ratings group by movieid having count(UserID)>39 order by sum(Rating) DESC limit 20) tbl
+    on m.MovieID=tbl.MovieID
+    order by tbl.Rate desc
+    
+    select director
+  from movies inner join stars_in_movies
+ where star_id=%s and movie_id = id;
+select director -- directors who have worked with star X
+from movies
+where movie_id in
+(
+    select movie_id  --All movies in which star X has acted
+    from stars_in_movies
+    where star_id = "X"
+)
